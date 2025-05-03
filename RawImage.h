@@ -47,7 +47,7 @@ typedef RawImage<uint8_t>  Raw8;
 typedef RawImage<uint16_t> Raw16;
 
 template<class type>
-RawImage<type> * newImage(const char * path, int16_t width, int16_t height) {
+RawImage<type>* newImage(const char * path, int16_t width, int16_t height) {
   typedef RawImage<type> raw;
   File f = SD.open(path, FILE_READ);
   if (!f) {
