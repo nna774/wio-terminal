@@ -10,21 +10,26 @@ TFT_eSPI tft;
 bool nop_flag = false;
 void sleep() {
   nop_flag = true;
+  digitalWrite(LED_BUILTIN, LOW);
 }
 bool sleeping() {
   return nop_flag;
+}
+void awake() {
+  nop_flag = false;
+  digitalWrite(LED_BUILTIN, HIGH);
 }
 
 bool left_flag = false;
 void button_handler_left() {
   left_flag = true;
-  nop_flag = false;
+  awake();
 }
 
 bool right_flag = false;
 void button_handler_right() {
   right_flag = true;
-  nop_flag = false;
+  awake();
 }
 
 using ImageBase = uint16_t;
@@ -60,6 +65,8 @@ void setup() {
   log("button init...");
   pinMode(BUTTON_1, INPUT); //left button
   pinMode(BUTTON_3, INPUT); //right button
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH);
   attachInterrupt(digitalPinToInterrupt(BUTTON_1), button_handler_left, FALLING);
   attachInterrupt(digitalPinToInterrupt(BUTTON_3), button_handler_right, FALLING);
 
