@@ -29,7 +29,7 @@ extern TFT_eSPI tft;
 
 template<class type>
 struct RawImage {
-  type * ptr() { return (type *)val_; }
+  type* ptr() { return reinterpret_cast<type*>(val_); }
   type get(int16_t x, int16_t y) { return this->ptr()[y * width() + x]; }
   void draw(size_t x = 0, size_t y = 0) { tft.pushImage(x, y, width(), height(), ptr()); }
   void release() { delete[] val_; }
